@@ -1,0 +1,86 @@
+@import 'foundation_and_overrides';
+@import 'foundation-icons';
+
+// top-bar
+.contain-to-grid {
+  background-color: white;
+}
+
+$base-bg-color: #008CBA;
+$base-hover-color: lighten($base-bg-color, 4%);
+
+
+#top-bar {
+  background-color: $base-bg-color;
+  li {
+    background-color: $base-bg-color;
+  }
+  ul.right {
+    margin-right: 0.5em;
+  }
+  a:hover {
+    background-color: $base-hover-color;
+    //#72BAE0;
+  }
+}
+
+#logo-top, #logo-bottom {
+  .column {
+    padding: 0 !important;
+  }
+}
+
+#tweesporen {
+  background-color: #404489;
+  .button {
+    margin-top: 0.5em;
+    width: 70% !important;
+    font-size: 120%;
+    @media #{$medium-only} {
+     font-size: 140%;
+    }
+    @media #{$large-only} {
+     font-size: 190%;
+    }
+  }
+}
+
+#no-results {
+  background-color: #fca;
+  padding: 1em;
+  h1 {
+    font-size: 150%;
+  }
+}
+
+
+.word {
+  background-color: #e2e2e2;
+  margin-top: 0.5em;
+  h1 {
+    font-size: 150%;
+  }
+  ul {
+    list-style: none;
+  }
+  img {
+    max-width: 220px;
+    max-height: 180px;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+}
+
+#pagination {
+  background-color: $base-bg-color;
+  color: white;
+  padding: 1em;
+  a {
+    color: darken(white, 30%);
+  }
+}
+
+#meer-info {
+  font-size: 120%;
+  line-height: 150%
+}

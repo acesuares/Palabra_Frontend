@@ -1,0 +1,11 @@
+development:
+  adapter: mysql2
+  database: Palabra_dev
+  username: USERNAME
+  password: PASSWORD
+
+production:
+  adapter: mysql2
+  database: Palabra
+  username: USERNAME
+  password: PASSWORD

@@ -1,0 +1,239 @@
+<!-- navbar -->
+  <div class="contain-to-grid fixed">
+    <nav id='top-bar' class="top-bar" data-topbar>
+      <ul class="title-area">
+        <li class="name">
+          <h1><a href="/">Palabra</a></h1>
+        </li>
+        <li class="toggle-topbar menu-icon">
+          <a href="#"><span></span></a>
+        </li>
+      </ul>
+      <section class="top-bar-section">
+        <ul class="right">
+          <li>
+            <a href="#" data-reveal-id="meer-info" class="button">Mas informashon</a>
+          </li>
+        </ul>
+      </section>
+    </nav>
+  </div>
+<!-- end navbar -->
+
+<!-- logos top -->
+  <div class='row show-for-large-up' id='logo-top'>
+    <div class='large-6 column'>
+      <%= image_tag 'logo-fpi.png' %>
+    </div>
+    <div class='large-6 column'>
+      <%= image_tag 'logo-uoc.png' %>
+    </div>
+  </div>
+<!-- end logos top -->
+
+
+<div class='row' id='tweesporen'>
+  <div class='large-6 column text-center'>
+    <a href="#" data-reveal-id="area-pop-up" class="button radius">Area di<br />edukashon</a>
+  </div>
+  <div class='large-6 column text-center'>
+    <a href="#" data-reveal-id="search-pop-up" class="button radius" id='search-button'>Buska<br />palabra</a>
+  </div>
+</div>
+
+<% if @words.empty? %>
+  <div class='row' id='no-results'>
+    <div class='large-12 column'>
+      <h1>No a haña nada</h1>
+    </div>
+  </div>
+<% else %>
+  <% @words.each do |w| %>
+    <div class='row word'>
+      <div class='large-6 column'>
+        <h1><%= w.send("tr_#{@taal}") %></h1>
+        <% if w.has_description? %>
+					<p class='description'>
+            <%= w.description  %>
+					</p>
+        <% end %>
+        <ul>
+          <% if w.has_dutch? && @taal != 'nl' %>
+            <li>
+              <%= "Hulandes: #{w.tr_nl}"  %>
+            </li>
+          <% end %>
+          <% if w.has_spanish? && @taal != 'es' %>
+            <li>
+              <%= "Spañó: #{w.tr_es}" %>
+            </li>
+          <% end %>
+          <% if w.has_english? && @taal != 'en' %>
+            <li>
+              <%= "Ingles: #{w.tr_en}" %>
+            </li>
+          <% end %>
+          <% if w.has_pap_cw? && @taal != 'pap_cw' %>
+            <li>
+              <%= "Papiamentu: #{w.tr_pap_cw}" %>
+            </li>
+          <% end %>
+          <% if w.has_wordtype? %>
+            <li>
+              <%= "Kategoria gramatikal: #{w.wordtype.name}" %>
+            </li>
+          <% end %>
+          <% if w.has_goal? %>
+            <li>
+              <%= "Area di edukashon: #{w.goal.name}" %>
+            </li>
+          <% end %>
+          <% if w.has_source? %>
+            <li>
+              <%= "Fuente: #{w.source.name}" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class='large-6 column'>
+        <% unless w.picture_url.blank? %>
+            <%= image_tag w.picture_url, class: 'word-image right' %>
+        <% end %>
+        <% unless w.youtube_url.nil? && w.youtube_url.blank? %>
+            <%= YouTubeAddy.youtube_embed_url(w.youtube_url, 220, 180).html_safe %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class='row' id='pagination'>
+    <div class='large-6 column text-center'>
+      <%= @words.count %> palabra hañá<br/>
+    </div>
+    <div class='large-6 column text-center'>
+      <%= will_paginate(@words, previous_label: 'Anterior', next_label: 'Siguiente') %>
+    </div>
+  </div>
+
+<% end %>
+
+
+
+
+<!-- logos bottom -->
+  <div class='row' id='logo-bottom'>
+    <div class='large-6 column'>
+      <%= image_tag 'logo-fpi.png' %>
+    </div>
+    <div class='large-6 column'>
+      <%= image_tag 'logo-uoc.png' %>
+    </div>
+  </div>
+<!-- end logos bottom -->
+
+
+
+
+<!-- reveal modals -->
+  <div id="meer-info" class="reveal-modal" data-reveal>
+      <div class='row' id="reveal-more-info">
+        <div class="large-6 column text-right">
+          Palabra ku entrada hulandes
+        </div>
+        <div class="large-6 column text-left">
+          <%= Word.nederlands.count %><br/>
+        </div>
+        <div class="large-6 column text-right">
+          Palabra ku entrada spañó
+        </div>
+        <div class="large-6 column text-left">
+            <%= Word.spaans.count %><br/>
+        </div>
+        <div class="large-6 column text-right">
+          Palabra ku entrada ingles
+        </div>
+        <div class="large-6 column text-left">
+            <%= Word.engels.count %><br/>
+        </div>
+        <div class="large-6 column text-right">
+          Palabra ku entrada papiamentu
+        </div>
+        <div class="large-6 column text-left">
+          <%= Word.count %><br/>
+        </div>
+        <div class="large-6 column text-right">
+          Kategorianan gramatikal
+        </div>
+        <div class="large-6 column text-left">
+            <%= (Wordtype.count) - 1 %><br/>
+        </div>
+        <div class="large-6 column text-right">
+          Areanan di edukashon
+        </div>
+        <div class="large-6 column text-left">
+          <%= (Goal.count) - 1  %><br/>
+        </div>
+        <div class="large-6 column text-right">
+          Palabra den Buki di Oro
+        </div>
+        <div class="large-6 column text-left">
+          <%= Word.where(attested:2).count %><br/>
+        </div>
+        <div class="large-6 column text-right">
+          Software
+        </div>
+        <div class="large-6 column text-left">
+          Suares & Co<br/>
+        </div>
+        <div class="large-6 column text-right">
+          Diseño
+        </div>
+        <div class="large-6 column text-left">
+          Kuki + Ko<br/>
+        </div>
+        <div class="large-6 column text-right">
+          Kontenido
+        </div>
+        <div class="large-6 column text-left">
+          FPI & Manuel Maduro
+        </div>
+      </div>
+    <a class="close-reveal-modal">&#215;</a>
+  </div>
+  <div id="search-pop-up" class="reveal-modal" data-reveal>
+    <%= form_tag "/", :method => "get", :remote => false do %>
+      <div class='row' id="search">
+        <div class="large-4 column">
+          <h1>Buska</h1>
+          <%= search_field_tag :searchword, params[:searchword], :placeholder => 'buska', :id => 'searchword' %>
+          <%= select_tag :taal, options_for_select([['papiamentu','pap_cw'], ['nederlands','nl'], ['español','es'], ['english', 'en']], :selected => @taal), { prompt: 'Kies een taal' } %>
+        </div>
+        <div class="large-1 column show-for-medium-up">
+          &nbsp;
+        </div>
+        <div class="large-7 column">
+          <h1>Filtra</h1>
+          <%= select("goal", "id", Goal.collection_for_select,          { prompt: 'Skohe un área di edukashon' }) %>
+          <%= select("wordtype", "id", Wordtype.collection_for_select,  { prompt: 'Skohe un kategoria gramatikal' }) %>
+          <%= select("source", "id", Source.collection_for_select,      { prompt: 'Skohe un fuente' }) %>
+          <%= link_to "<i class='fi-x'></i>".html_safe, '/', :title => 'reset', :class => "button right", :remote => false, :search => '', :id => 'leegmaken' %>
+          <%= submit_tag "buska", :id => 'submit_zoek', :class => 'button right' %>
+        </div>
+      </div>
+    <% end %>
+    <a class="close-reveal-modal">&#215;</a>
+  </div>
+  <div id="area-pop-up" class="reveal-modal" data-reveal>
+    <%= form_tag "/", :method => "get", :remote => false do %>
+      <div class='row' id="search">
+        <div class="large-12 column">
+          <h1>Skohe un área di edukashon</h1>
+          <%= select("goal", "id", Goal.collection_for_select,          { prompt: 'Skohe un área di edukashon' }) %>
+          <%= link_to "<i class='fi-x'></i>".html_safe, '/', :title => 'reset', :class => "button right", :remote => false, :search => '', :id => 'leegmaken' %>
+          <%= submit_tag "buska", :id => 'submit_zoek', :class => 'button right' %>
+        </div>
+      </div>
+    <% end %>
+    <a class="close-reveal-modal">&#215;</a>
+  </div>
+<!-- end reveal modals -->
